@@ -1,0 +1,225 @@
+.chuppi {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  
+}
+
+.jo {
+  color: black;
+}
+
+.row1 {
+  display: flex;
+  flex-direction: row;
+  min-width: 80%;
+}
+
+.col-1 {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+}
+
+.available-brands
+{
+  /* border-top: 1px solid gray; */
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* flex: 1 0 auto; */
+  min-width:inherit;
+  word-wrap: break-word;
+  height:40vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  text-align:left;
+}
+
+.brand-label{
+  margin-bottom:3px;
+  width:stretch;
+  /* text-align: left */
+  /* display: block */
+}
+
+.chuppiInfo {
+  padding: 5px;
+  flex-grow: 1;
+  display: flex;
+  
+}
+
+.chuppiInfoChild{
+  flex: 1;
+  align-self: center
+}
+
+.searchBar {
+  display: flex;
+  align-items: stretch;
+  order: 1;
+  flex: 1 0 10%;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.chuppiGrid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 5px;
+  order: 2;
+  min-width: 80%;
+  /* min-height: 87vh */
+}
+
+.chuppiGridLabel{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 5px;
+  order: 2;
+  min-width: 80%;
+  
+}
+
+
+.chuppiGridImage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chuppiGridImage-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chuppiGridItem {
+  font-size: small;
+  min-height: 50px;
+  width: 180px;
+  word-wrap: break-word;
+  padding-top: 10px;
+  margin: 10px 10px;
+}
+
+.chuppiGridItemLabel{
+  font-size: small;
+  min-height: 50px;
+  width: 200px;
+  word-wrap: break-word;
+  /* padding-top: 5px; */
+  /* margin: 10px 10px; */
+ align-content: flex-end;
+  flex-direction: column;
+  flex: 1 0 auto;
+  padding-top: 10%
+ 
+}
+
+.chuppiGridPodLabel{
+  display: flex;
+  border: 1px solid rgb(238, 238, 238);
+  border-radius: 7px;
+  margin-bottom: 10px;
+  margin-left: 1px;
+  
+}
+
+.chuppiGridPod {
+  border: 1px solid rgb(238, 238, 238);
+  border-radius: 10px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  padding-left: 10px;
+  
+  /* display:flex;
+    flex-direction: column;
+    flex-flow: row wrap; */
+}
+
+.chuppiGridWas {
+  text-decoration: line-through;
+  order: 4;
+}
+
+.chuppiGridItemID {
+  font-size: small;
+  /* border-bottom: 1px dotted orange; */
+  padding-top: 2px;
+}
+
+.chuppi-item-img {
+  /* width: 100px;
+    height: 100px; */
+  width: 150px;
+  height: 150px;
+  animation-name: zoomin;
+  animation-duration: 0.3s;
+  padding-bottom: 10px;
+}
+
+.chuppi-item-img-label {
+  /* width: 100px;
+    height: 100px; */
+  width: 200px;
+  height: 200px;
+  padding-top: 5px;
+  animation-name: zoomin;
+  animation-duration: 0.3s;
+  padding-bottom: 10px;
+}
+
+@keyframes zoomin {
+  from {
+    height: 50px;
+    width: 50px;
+  }
+  /* to {height:100px;width:100px;} */
+  to {
+    height: 150px;
+    width: 150px;
+  }
+}
+
+.chuppiGridBrand {
+  margin-top: 15px;
+  
+}
+
+.KeyWords {
+  display: flex;
+}
+
+
+.chuppiGridPodB{
+  font-size: small;
+  min-height: 50px;
+  min-width:150px;
+  border: 1px solid rgb(238, 238, 238);
+  border-radius: 7px;
+  margin-bottom: 10px;
+  display:flex;
+  flex-direction: column;
+  position: relative;
+
+}
+
+.chuppiGridCount{
+  margin-top: 20px
+}
+
+.chuppiGridSavingsB{
+padding-top: 10px
+
+
+}

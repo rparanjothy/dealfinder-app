@@ -1,25 +1,79 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Header from "./components/Header";
+import DealWrapper from "./components/DealWrapper";
+import Footer from "./components/Footer.js";
+import BrandItemTable from "./components/BrandItemTable";
+import { Route } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import Chuppi from './components/Chuppi'
+import ChuppiGrid from './components/ChuppiGrid'
+import ChuppiGridBrand from './components/ChuppiGridBrand'
+import ChuppiGridLabels from './components/ChuppiGridLables'
+import ChuppiGridProducts from './components/ChuppiGridProducts'
+import ChuppiGridAllBrands from './components/ChuppiGridAllBrands'
+import {Navbar} from "reactstrap";
+import AllBrands from "./components/AllBrands";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div className="AlwaysShow">
+          <header className="App-header">
+            <Header season="Holiday" />
+          </header>
+          <Navbar color="dark" light expand="md">
+            {/* <NavLink
+              style={{ paddingRight: "10px", color: "white" }}
+              exact
+              to="/"
+            >
+              Home
+            </NavLink>
+            <NavLink
+              style={{ paddingRight: "10px", color: "white" }}
+              exact
+              to="/allbrands"
+            >
+              View Brands
+            </NavLink> */}
+            <NavLink
+              style={{ paddingRight: "10px", color: "white" }}
+              exact
+              to="/chuppiGrid/72"
+            >
+              Search Deals
+            </NavLink>
+            <NavLink
+              style={{ paddingRight: "10px", color: "white" }}
+              exact
+              to="/chuppiGridLabels"
+            >
+              Product Categories
+            </NavLink>
+            <NavLink
+              style={{ paddingRight: "10px", color: "white" }}
+              exact
+              to="/chuppiGridAllBrands"
+            >
+              Brands
+            </NavLink>
+          </Navbar>
+        
+        {/* <Route exact path="/" component={DealWrapper} /></div> */}
+        <Route exact path="/" component={ChuppiGrid} /></div>
+
+        <Route exact path="/branditemtable/:id" component={BrandItemTable} />
+        <Route exact path="/allbrands/" component={AllBrands} />
+        <Route exact path="/chuppi/:msg" component={Chuppi} />
+        <Route exact path="/chuppiGrid/:msg" component={ChuppiGrid} />
+        <Route exact path="/chuppiGridBrand/:msg" component={ChuppiGridBrand} />
+        <Route exact path="/chuppiGridLabels" component={ChuppiGridLabels} />
+        <Route exact path="/chuppiGridProducts/:msg" component={ChuppiGridProducts} />
+        <Route exact path="/chuppiGridAllBrands" component={ChuppiGridAllBrands} />
+        
+        <Footer />
       </div>
     );
   }

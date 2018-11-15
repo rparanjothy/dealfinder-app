@@ -1,20 +1,66 @@
 .App {
   text-align: center;
+  font-size: medium;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+/* .AlwaysShow{
+  position: fixed;
+  min-width:100%;
+} */
+
+.TableContainer {
+  padding: 5px;
+  font-size: small;
+  flex-grow: 2;
+}
+
+.dealtable {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.brandItemFilter {
+  left: "10px";
+  padding: "2px 20px";
+  font-size: "small";
+}
+
+.branddealtable {
+  display: flex;
+}
+
+.AllBrandsTableContainer {
+  min-height: 80vh;
+  padding: 10px;
+}
+
+.WrapperContainer {
+  padding: 10px;
+  min-height: 82vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.Footer {
+  padding: 10px;
+  background-color: black;
+  color: white;
+  text-align: right;
+  bottom: 0px;
+  position: inherit;
+  height: 7.5vh;
+  width: 100%;
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  font-size: x-large;
   color: white;
 }
 
@@ -22,11 +68,21 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+.itemimg {
+  width: 300px;
+  height: 300px;
+  animation-name: zoomin-d;
+  animation-duration: 0.4s;
+}
+
+@keyframes zoomin-d {
   from {
-    transform: rotate(0deg);
+    height: 200px;
+    width: 200px;
   }
+
   to {
-    transform: rotate(360deg);
+    height: 300px;
+    width: 300px;
   }
 }
