@@ -11,6 +11,9 @@ Hunting down savings for you using Python, react and NodeJS
 7. cd /client/server/
 8. npm start -> this will start the express server
 9. open localhost:3000
+10. run the Python API server
+    cd /client/server/
+    python savingsAPI.py
 
 to run locally
 1. cd /client
