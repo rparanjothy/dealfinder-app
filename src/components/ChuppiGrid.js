@@ -16,7 +16,7 @@ class chuppiGrid extends Component {
 
     // this.searchOptions = { price: null, savings: null, search: null };
     //this.searchOptions = { price: 9999999, savings: 1, search: "" };
-    this.sortasc = "";
+    this.sortasc = true;
     this.sortitems = this.sortitems.bind(this);
     this.load = this.load.bind(this);
     this.btnToggle = true;
@@ -31,7 +31,8 @@ class chuppiGrid extends Component {
         input: msg,
         searchOptions: { price: 9999999, savings: 1, search: "" },
         //Added Pagination
-        pagination: { start: 0, end: 100 }
+        pagination: { start: 0, end: 100 },
+        sortasc:true
       },
       () => {
         console.log("dss", this.state.input);

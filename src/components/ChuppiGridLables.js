@@ -33,7 +33,8 @@ class chuppiGridLables extends Component {
         searchOptions: { price: 9999999, savings: 1, search: "" },
         //Added Pagination
         pagination: { start: 0, end: 100 },
-        showButton:1
+        showButton:1,
+        sortasc:true
 
       },
       () => {
@@ -267,7 +268,7 @@ class chuppiGridLables extends Component {
           .filter(firstWord => pattern.test(firstWord))
       )
       .then(data =>
-        this.setState({ master: data }, () => {
+        this.setState({ master: data.sort() }, () => {
           console.log("master count " + this.state.master.length);
           // now load data based on pagination length
           this.setState({ data: this.state.master.slice(start, end) }, () => {
@@ -286,7 +287,7 @@ class chuppiGridLables extends Component {
       this.setState({ pagination: { start: 0, end: 100 } });
       var { start, end } = this.state.pagination;
       var toSort = this.state.master;
-      this.state.sortasc ? toSort.sort() : toSort.sort().reverse();
+      !this.state.sortasc ? toSort.sort() : toSort.sort().reverse();
       this.setState({ data: toSort.slice(start, end) }, () => {
         console.log("Sorted..");
       });
