@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import axios from "axios";
 import { Badge, Button, Form, FormGroup, Label, Input } from "reactstrap";
@@ -32,7 +31,7 @@ class chuppiGrid extends Component {
         searchOptions: { price: 9999999, savings: 1, search: "" },
         //Added Pagination
         pagination: { start: 0, end: 100 },
-        sortasc:true
+        sortasc: true
       },
       () => {
         console.log("dss", this.state.input);
@@ -41,8 +40,19 @@ class chuppiGrid extends Component {
     // this.searchOptions = { price: 9999999, savings: 1, search: "" };
 
     //this.load()
+    this.getlabels();
   }
 
+  getlabels() {
+    axios
+      .get([config.APIURL, "prodlabel"].join("/"))
+      .then(x => x.data.labels)
+      .then(labels =>
+        this.setState({ labels }, () => {
+          console.log("labels loaded", this.state.labels.length);
+        })
+      );
+  }
   //   filter(e) {
   //     console.log("Howdy!");
   //     var toFilter = this.state.master;
@@ -163,7 +173,7 @@ class chuppiGrid extends Component {
         break;
       case "search":
         // console.log(this.state.searchOptions);
-
+        const l = e.target.value;
         this.setState(
           {
             searchOptions: {
@@ -174,8 +184,24 @@ class chuppiGrid extends Component {
           },
           () => {
             // console.log(this.state.searchOptions);
+            if (l) {
+              this.setState(
+                {
+                  filteredLabel: this.state.labels.filter(label =>
+                    label.toLowerCase().includes(l.toLowerCase())
+                  )
+                },
+                () => console.log(this.state.filteredLabel)
+              );
+              // .map(matches => {console.log("**");console.log(matches);return matches})
+            } else {
+              this.setState({ filteredLabel: null });
+            }
           }
         );
+
+        // now lets try dynamic
+
         break;
       default:
         break;
@@ -219,7 +245,10 @@ class chuppiGrid extends Component {
           this.setState({ status: "" });
         })
       )
-      .catch(e => {console.log("Error", e); this.setState({ status: e.toString() });});
+      .catch(e => {
+        console.log("Error", e);
+        this.setState({ status: e.toString() });
+      });
   }
 
   sortitems() {
@@ -347,7 +376,11 @@ class chuppiGrid extends Component {
                             data: null,
                             master: null,
                             brands: null,
-                            searchOptions: { price: 9999999, savings: 1, search: "" }
+                            searchOptions: {
+                              price: 9999999,
+                              savings: 1,
+                              search: ""
+                            }
                           });
                         }}
                       >
@@ -401,6 +434,19 @@ class chuppiGrid extends Component {
                     onChange={e => this.onChangeValue(e, e.target.name)}
                   />
                 </FormGroup>
+
+                {/* dynamic filter */}
+                {this.state.filteredLabel ? (
+                  <div className="dynamic-filter-result">
+                    <Button size="sm" block disabled>Matches</Button>
+                    <div className="label-container">
+                      {this.state.filteredLabel.map(lbl => (
+                        <div>{lbl}</div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
                 <Button size="sm" block onClick={e => this.load()}>
                   Find Deals !
                 </Button>
@@ -421,7 +467,7 @@ class chuppiGrid extends Component {
                 {this.state.brands.map(brand => (
                   <Badge className="brand-label" color="link">
                     <Link
-                      style={{ color: "gray"}}
+                      style={{ color: "gray" }}
                       to={"/chuppiGridBrand/" + brand}
                     >
                       {brand}
@@ -562,7 +608,11 @@ class chuppiGrid extends Component {
                           data: null,
                           master: null,
                           brands: null,
-                          searchOptions: { price: 9999999, savings: 1, search: "" }
+                          searchOptions: {
+                            price: 9999999,
+                            savings: 1,
+                            search: ""
+                          }
                         });
                       }}
                     >
