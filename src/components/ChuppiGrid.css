@@ -9,6 +9,13 @@
   color: black;
 }
 
+.joe
+{
+  color: black;
+  background-color: rgb(194, 194, 194);
+  display:block;
+  font-weight: bold
+}
 .row1 {
   display: flex;
   flex-direction: row;
@@ -192,7 +199,9 @@
 }
 
 .chuppiGridBrand {
-  margin-top: 15px;
+  /* margin-top: 15px; */
+  margin-top: 1px;
+
   
 }
 

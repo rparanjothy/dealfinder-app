@@ -462,10 +462,10 @@ class chuppiGridAllBrands extends Component {
               ? this.state.data.map((i, j) => (
                   <div key={j} className="chuppiGridPodB">
                     <div className="chuppiGridBrand">
-                      <a href={"/chuppiGridBrand/" + i.brand}>
-                        <Button block size="sm" color="q">
+                      <a className="joe" href={"/chuppiGridBrand/" + i.brand}>
+                        {/* <Button block size="sm" color="q"> */}
                           {i.brand}
-                        </Button>
+                        {/* </Button> */}
                       </a>
                     </div>
 
