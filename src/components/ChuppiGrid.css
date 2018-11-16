@@ -111,6 +111,18 @@
 }
 
 
+.chuppiGridLabelAll{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 5px;
+  order: 1;
+  min-width: 80%;
+  min-height:60vh;
+}
+
+
 .chuppiGridImage {
   display: flex;
   flex-direction: column;

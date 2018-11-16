@@ -11,6 +11,7 @@ import ChuppiGrid from './components/ChuppiGrid'
 import ChuppiGridBrand from './components/ChuppiGridBrand'
 import ChuppiGridLabels from './components/ChuppiGridLables'
 import ChuppiGridProducts from './components/ChuppiGridProducts'
+import ChuppiGridLabelsAll from './components/ChuppiGridLablesAll'
 import ChuppiGridAllBrands from './components/ChuppiGridAllBrands'
 import {Navbar} from "reactstrap";
 import AllBrands from "./components/AllBrands";
@@ -59,6 +60,13 @@ class App extends Component {
             >
               Brands
             </NavLink>
+            <NavLink
+              style={{ paddingRight: "10px", color: "white" }}
+              exact
+              to="/chuppiGridLabelsAll"
+            >
+              All
+            </NavLink>
           </Navbar>
         
         {/* <Route exact path="/" component={DealWrapper} /></div> */}
@@ -72,6 +80,7 @@ class App extends Component {
         <Route exact path="/chuppiGridLabels" component={ChuppiGridLabels} />
         <Route exact path="/chuppiGridProducts/:msg" component={ChuppiGridProducts} />
         <Route exact path="/chuppiGridAllBrands" component={ChuppiGridAllBrands} />
+        <Route exact path="/chuppiGridLabelsAll" component={ChuppiGridLabelsAll} />
         
         <Footer />
       </div>

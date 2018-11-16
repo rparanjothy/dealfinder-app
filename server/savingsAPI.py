@@ -118,6 +118,25 @@ def getProdLabel():
     out=[s_ for s_ in set(x)]
     return jsonify({"msg":"{0} labels found..".format(len(out)),"labels":out})
 
+@app.route("/prodlabelall")
+def getProdLabelAll():
+    f=prdnmdf['productname'].dropna()
+    x=f.map(lambda x: " ".join(x.split(" ")[-2:]))
+    out=[s_ for s_ in set(x)]
+    return jsonify({"labels":out})
+
+
+
+@app.route("/prodlabelitemid")
+def getProdLabelitemid():
+    master['lbl']=master['productname'].map(lambda x: " ".join(x.split(" ")[-2:]))
+#    out=master.loc[:,['itemid','lbl']]
+    out=master.groupby(by='lbl')['itemid'].min()
+    out.reset_index()
+    return jsonify(to_json(out.reset_index()))
+    # out=[s_ for s_ in set(x)]
+    # return jsonify({"msg":"{0} labels found..".format(len(out)),"labels":out})
+
 # @app.route('/search')
 # def search():
 #     return render_template('search.html')
@@ -161,6 +180,7 @@ def returnResult(pct,minPrice='9999999'):
     lbl='Savings : '+pct+'% and Price : $'+str(minPrice) + ' - {0} records found'.format(str(ct)) if not prdnamefilter else 'Savings : '+pct+'% and Price : $'+str(minPrice) + ' and ProductName contains {1} - {0} records found'.format(str(ct),prdnamefilter)  
     result['brandURL']=result['brand'].map(getBrandItems)
     result['prodlbl']=result['productname'].map(lambda x: " ".join(x.split(" ")[-2:]))
+    
     return jsonify({"message":lbl, "data":to_json(result)})
 
 if __name__ == '__main__':
@@ -180,6 +200,12 @@ if __name__ == '__main__':
     # filer for values with was price
     #df=df.loc[df['was'].isna()!=True,:]
     df=df.dropna()
+
+    # fillval={'was':-1,'savings':111}
+    # df=df.fillna(value=fillval)
+
+    # df.loc[df['was']!=None,['was']]=df['price']
+
     df['savings']=((df['was']-df['price'])/df['was']*100).round(2)    
     df['discount']=(df['was']-df['price'])
     df=df.join(prdnmdf.set_index('itemid'),on='itemid',rsuffix='_n')
