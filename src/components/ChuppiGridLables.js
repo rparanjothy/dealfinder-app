@@ -125,7 +125,7 @@ class chuppiGridLables extends Component {
     // const itemid = e.target.text;
     // var imgURL = null;
     // const url = config.IMGURL + itemid + "/stores/8119/listings";
-    const url = "http://localhost:5000/showSavings/1/99999999";
+    const url = [config.APIURL,"showSavings/1/99999999"].join("/");
     console.log(url);
     axios
       .get(url, { params: { search: label } })

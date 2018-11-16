@@ -24,14 +24,19 @@ class chuppiGridBrand extends Component {
   }
 
   componentWillMount() {
-    const { msg } = this.props.match.params;
+    var { msg, price, savings, search } = this.props.match.params;
+    price = price ? price : 9999998;
+    savings = savings ? savings : 1;
+    search = search ? search : "";
+
     this.setState(
       {
         input: msg,
-        searchOptions: { price: 9999999, savings: 1, search: "" },
+        // searchOptions: { price: 9999999, savings: 1, search: "" },
+        searchOptions: { price, savings, search },
         //Added Pagination
         pagination: { start: 0, end: 100 },
-        sortasc:true
+        sortasc: true
       },
       () => {
         console.log("dss", this.state.input);
@@ -226,14 +231,61 @@ class chuppiGridBrand extends Component {
     const url = [config.APIURL, "showSavings/bybrand", brand, "items"].join(
       "/"
     );
-    console.log(url);
+    console.log(url, this.state.searchOptions);
+
     var { start, end } = this.state.pagination;
     axios
       .get(url)
       .then(x => x.data)
+      //apply filters
+      .then(x =>
+        x.filter(x =>
+          this.state.searchOptions.price.toString().includes("-")
+            ? x.price >=
+                parseFloat(
+                  this.state.searchOptions.price.toString().split("-")[0]
+                ) &&
+              x.price <= this.state.searchOptions.price.toString().split("-")[1]
+            : x.price <= parseFloat(this.state.searchOptions.price) &&
+              // x.savings >= parseFloat(this.state.searchOptions.savings) &&
+              x.productname
+                .toLowerCase()
+                .includes(this.state.searchOptions.search.toLowerCase())
+        )
+      )
+      .then(x =>
+        x.filter(x =>
+          this.state.searchOptions.savings.toString().includes("-")
+            ? x.savings >=
+                parseFloat(
+                  this.state.searchOptions.savings.toString().split("-")[0]
+                ) &&
+              x.savings <=
+                parseFloat(
+                  this.state.searchOptions.savings.toString().split("-")[1]
+                )
+            : 
+            // x.price <= parseFloat(this.state.searchOptions.price) &&
+              x.savings >= parseFloat(this.state.searchOptions.savings) &&
+              x.productname
+                .toLowerCase()
+                .includes(this.state.searchOptions.search.toLowerCase())
+        )
+      )
+      .then(x =>
+        x.filter(x =>
+          this.state.searchOptions.savings !== ""
+            ? x.productname
+                .toLowerCase()
+                .includes(this.state.searchOptions.search.toLowerCase())
+            : true
+        )
+      )
+
       .then(data =>
         this.setState({ master: data }, () => {
           console.log("master count " + this.state.master.length);
+          console.log("master  " + this.state.master);
           // now load data based on pagination length
           this.setState({ data: this.state.master.slice(start, end) }, () => {
             // console.log(this.state.data);

@@ -81,6 +81,11 @@ class App extends Component {
         <Route exact path="/chuppiGridProducts/:msg" component={ChuppiGridProducts} />
         <Route exact path="/chuppiGridAllBrands" component={ChuppiGridAllBrands} />
         <Route exact path="/chuppiGridLabelsAll" component={ChuppiGridLabelsAll} />
+        <Route exact path="/chuppiGridBrand/:msg/:savings/:price/:search" component={ChuppiGridBrand} />
+        
+        
+
+
         
         <Footer />
       </div>

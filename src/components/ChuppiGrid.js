@@ -443,13 +443,20 @@ class chuppiGrid extends Component {
                 </FormGroup>
 
                 {/* dynamic filter */}
-                {(this.state.filteredLabel && this.state.filteredLabel.length) ? (
+                {this.state.filteredLabel && this.state.filteredLabel.length ? (
                   <div className="dynamic-filter-result">
-                    <Button size="sm" block disabled>Matches</Button>
+                    <Button size="sm" block disabled>
+                      Matches
+                    </Button>
                     <div className="label-container">
                       {this.state.filteredLabel.map(lbl => (
                         <div>
-                          <Link style={{color:"rgb(160,160,160)"}}  to={"/chuppiGridProducts/"+lbl}>{lbl}</Link>
+                          <Link
+                            style={{ color: "rgb(160,160,160)" }}
+                            to={"/chuppiGridProducts/" + lbl}
+                          >
+                            {lbl}
+                          </Link>
                         </div>
                       ))}
                     </div>
@@ -479,7 +486,16 @@ class chuppiGrid extends Component {
                       style={{ color: "gray" }}
                       to={"/chuppiGridBrand/" + brand}
                     > */}
-                    <Link style={{color:"rgb(160,160,160)"}}   to={"/chuppiGridBrand/" + brand}>
+                    <Link
+                      style={{ color: "rgb(160,160,160)" }}
+                      to={[
+                        "/chuppiGridBrand",
+                        brand,
+                        this.state.searchOptions.savings,
+                        this.state.searchOptions.price,
+                        this.state.searchOptions.search
+                      ].join("/")}
+                    >
                       {brand}
                     </Link>
                   </Badge>
