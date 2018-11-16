@@ -227,12 +227,8 @@ class chuppiGridLables extends Component {
           },
           () => {
             console.log(this.state.searchOptions);
-            // //call filter in real time
-            // if (this.state.searchOptions.search) {
-            //   this.filter(e);
-            // } else {
-            //   this.setState({ filtercount: 0 });
-            // }
+            setTimeout(()=>{this.state.searchOptions.search?this.filter(e):this.refresh(e)},2000)
+            
           }
         );
         break;
@@ -430,7 +426,7 @@ class chuppiGridLables extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Button
+                {/* <Button
                   style={{ marginTop: "5px" }}
                   size="sm"
                   onClick={e => this.filter(e)}
@@ -438,7 +434,7 @@ class chuppiGridLables extends Component {
                 >
                   Find Item
                 </Button>
-                <br />
+                <br /> */}
                 <Button
                   style={{ marginTop: "5px" }}
                   size="sm"
@@ -475,7 +471,7 @@ class chuppiGridLables extends Component {
 
                           <Button
                             size="sm"
-                            color="dark"
+                            color="secondary"
                             block
                             style={{ marginTop: "20px" }}
                             onClick={e =>
@@ -483,7 +479,7 @@ class chuppiGridLables extends Component {
                               this.loadimagedata(this.state.currentItem)
                             }
                           >
-                            View
+                            See...
                           </Button>
                         ) : null
                       ) : null}

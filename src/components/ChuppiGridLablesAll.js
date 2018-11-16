@@ -124,7 +124,7 @@ class chuppiGridLablesAll extends Component {
     // const itemid = e.target.text;
     // var imgURL = null;
     // const url = config.IMGURL + itemid + "/stores/8119/listings";
-    const url = "http://localhost:5000/showSavings/0/9999";
+    const url =  [config.APIURL,"showSavings/0/9999"].join("/");
     console.log(url);
     axios
       .get(url, { params: { search: label } })
@@ -469,7 +469,7 @@ class chuppiGridLablesAll extends Component {
             {this.state.data
               ? this.state.data.map((i, j) => (
                   <div key={j} className="chuppiGridPodLabel">
-                    <div className="chuppiGridItemLabel">
+                    <div className="chuppiGridItemLabelAll">
                      
                       {/* <Link
                         onMouseOver={e =>
