@@ -6,7 +6,7 @@
 
 const APIURL = "http://localhost:5000"
 const IMGURL = "http://origin-api.gcp-prod.homedepot.com/catalog/v1/items/"
-
-const config={APIURL,IMGURL}
+const SEARCHURL="http://www.homedepot.com"
+const config={APIURL,IMGURL,SEARCHURL}
 
 export default config

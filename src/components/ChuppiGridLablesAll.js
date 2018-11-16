@@ -232,6 +232,7 @@ class chuppiGridLablesAll extends Component {
             // } else {
             //   this.setState({ filtercount: 0 });
             // }
+            setTimeout(()=>{this.state.searchOptions.search?this.filter(e):this.refresh(e)},2000)
           }
         );
         break;
@@ -257,6 +258,9 @@ class chuppiGridLablesAll extends Component {
     const url = [config.APIURL, "prodlabelall"].join("/");
     console.log(url);
     const pattern = /^[A-Za-z]./;
+    // const specialCharFilter=/[,./\\]/;
+    // const specialCharFilter=/[,.*&^%$#@/\\]/;
+
     var { start, end } = this.state.pagination;
     axios
       .get(url)
@@ -265,7 +269,10 @@ class chuppiGridLablesAll extends Component {
         labels
           // .filter(label => label.charAt(0) === label.charAt(0).toUpperCase())
           .filter(firstWord => pattern.test(firstWord))
-          .filter(label =>  label.replace(/[^a-zA-Z0-9 ]/g, "-"))
+          // .filter(label =>  label.replace(/[^a-zA-Z0-9 ]/g, "-"))
+          // .filter(label =>  
+          //   // console.log(specialCharFilter.test(label),label , "filtered"); return 
+          // specialCharFilter.test(label))
       )
       .then(data =>
         this.setState({ master: data.sort() }, () => {
@@ -421,7 +428,7 @@ class chuppiGridLablesAll extends Component {
           <div className="searchBar container">
             <Form>
               <FormGroup>
-                <Label for="keywords">Search Text</Label>
+                <Label for="keywords">Type to Search</Label>
                 <Input
                   type="test"
                   name="search"
@@ -432,7 +439,7 @@ class chuppiGridLablesAll extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Button
+                {/* <Button
                   style={{ marginTop: "5px" }}
                   size="sm"
                   onClick={e => this.filter(e)}
@@ -440,7 +447,7 @@ class chuppiGridLablesAll extends Component {
                 >
                   Find Item
                 </Button>
-                <br />
+                <br /> */}
                 <Button
                   style={{ marginTop: "5px" }}
                   size="sm"
@@ -474,7 +481,7 @@ class chuppiGridLablesAll extends Component {
                         className="text-secondary"
                         to={"/chuppiGridProducts/" + i}
                       > */}
-                        {i}
+                        <a className="text-secondary" href={[config.SEARCHURL,"s",i].join("/")}>{i}</a>
                       {/* </Link> */}
 
                       {this.state.currentItem ? (

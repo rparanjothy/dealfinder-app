@@ -146,15 +146,14 @@
 
 .chuppiGridItemLabel{
   font-size: small;
-  min-height: 50px;
-  width: 200px;
+  min-height: 10px;
+  width: 100px;
   word-wrap: break-word;
-  /* padding-top: 5px; */
-  /* margin: 10px 10px; */
- align-content: flex-end;
+  align-content: center;
   flex-direction: column;
-  flex: 1 0 auto;
-  padding-top: 10%
+  /* flex: 1 0 auto; */
+  padding-top: 1%;
+  background-color:rgb(235, 231, 232);
  
 }
 
