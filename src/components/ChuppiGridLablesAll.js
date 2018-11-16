@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Badge, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Link } from "react-router-dom";
 import "./ChuppiGrid.css";
 import config from "../config/AppConfig";
 
-class chuppiGridAllBrands extends Component {
+class chuppiGridLablesAll extends Component {
   constructor(props) {
     super(props);
     this.state = { input: "" };
@@ -17,13 +18,14 @@ class chuppiGridAllBrands extends Component {
     this.sortasc = true;
     this.sortitems = this.sortitems.bind(this);
     this.load = this.load.bind(this);
-    this.btnToggle = true;
+
     this.goNext = this.goNext.bind(this);
     this.goPrev = this.goPrev.bind(this);
     this.refresh = this.refresh.bind(this);
   }
 
   componentWillMount() {
+    console.log("mountin");
     const { msg } = this.props.match.params;
     this.setState(
       {
@@ -31,7 +33,8 @@ class chuppiGridAllBrands extends Component {
         searchOptions: { price: 9999999, savings: 1, search: "" },
         //Added Pagination
         pagination: { start: 0, end: 100 },
-        sortasc:true
+        showButton: 1,
+        sortasc: true
       },
       () => {
         console.log("dss", this.state.input);
@@ -55,7 +58,7 @@ class chuppiGridAllBrands extends Component {
         // );
 
         toFilter = toFilter.filter(e =>
-          e["brand"]
+          e
             .toLowerCase()
             .includes(this.state.searchOptions.search.toLowerCase())
         );
@@ -104,42 +107,71 @@ class chuppiGridAllBrands extends Component {
     this.setState({ data: null });
     //reset pagination
     this.setState({ pagination: { start: 0, end: 100 } }, () => {
-      this.getDataCustom(this.state.input);
+      this.getDataCustom();
     });
   }
 
   loadimagedata(e) {
-    console.log(e.target.innerHTML);
+    //console.log(e);
     // console.log(e.target.outerHTML);
-
-    const itemid = e.target.innerHTML;
-
-    this.getImage(itemid);
+    setTimeout(() => {
+      this.getImage(e);
+    }, 10);
     return this.state.itemData ? this.state.itemData.img : null;
   }
 
-  getImage(itemid) {
+  getImage(label) {
     // const itemid = e.target.text;
     // var imgURL = null;
-    const url = config.IMGURL + itemid + "/stores/8119/listings";
+    // const url = config.IMGURL + itemid + "/stores/8119/listings";
+    const url = "http://localhost:5000/showSavings/0/9999";
     console.log(url);
     axios
-      .get(url, { params: { sortby: "brand" } })
+      .get(url, { params: { search: label } })
+      .then(x => x.data.data)
+      .then(x => x.filter(e => e.prodlbl === label))
+      .then(x => x.map(x => x.itemid))
       .then(response => {
-        return {
-          currentItem: itemid,
-          OnlineInv: response.data.items[0].invntry,
-          img: response.data.items[0].imageResources[0].urls[0].url.replace(
-            "_400",
-            "_300"
-          )
-        };
+        console.log(response);
+        return response[0];
       })
-      .then(d => {
-        this.setState({ itemData: d }, () => {
-          // console.log(this.state.itemData.length);
-        });
+      .then(c => {
+        console.log(c.includes("/") ? c.split("/").pop() : c);
+        return c.includes("/") ? c.split("/").pop() : c;
       })
+      .then(itemid =>
+        this.setState(
+          { itemData: { currentItem: label, itemid: itemid } },
+          () => {
+            console.log(this.state.itemData);
+            setTimeout(() => {
+              const imgurl =
+                config.IMGURL +
+                this.state.itemData.itemid +
+                "/stores/8119/listings";
+
+              axios
+                .get(imgurl)
+                .then(response => {
+                  return {
+                    currentItem: label,
+                    OnlineInv: response.data.items[0].invntry,
+                    img: response.data.items[0].imageResources[0].urls[0].url.replace(
+                      "_400",
+                      "_300"
+                    )
+                  };
+                })
+                .then(d => {
+                  this.setState({ itemData: d, showButton: 0 }, () => {
+                    // console.log(this.state.itemData.length);
+                  });
+                })
+                .catch(err => console.log(err));
+            }, 10);
+          }
+        )
+      )
       .catch(err => console.log(err));
   }
 
@@ -190,8 +222,7 @@ class chuppiGridAllBrands extends Component {
             searchOptions: {
               ...this.state.searchOptions,
               search: e.target.value
-            },
-            btnToggle: false
+            }
           },
           () => {
             console.log(this.state.searchOptions);
@@ -221,16 +252,23 @@ class chuppiGridAllBrands extends Component {
   //     .catch(e => console.log("Error", e));
   // }
 
-  getDataCustom(brand) {
+  getDataCustom() {
     this.setState({ status: "Loading....." });
-    const url = [config.APIURL, "showSavings/showbybrand"].join("/");
+    const url = [config.APIURL, "prodlabelall"].join("/");
     console.log(url);
+    const pattern = /^[A-Za-z]./;
     var { start, end } = this.state.pagination;
     axios
-      .get(url,{params:{sortby:"brand"}})
-      .then(x => x.data)
+      .get(url)
+      .then(x => x.data.labels)
+      .then(labels =>
+        labels
+          // .filter(label => label.charAt(0) === label.charAt(0).toUpperCase())
+          .filter(firstWord => pattern.test(firstWord))
+          .filter(label =>  label.replace(/[^a-zA-Z0-9 ]/g, "-"))
+      )
       .then(data =>
-        this.setState({ master: data }, () => {
+        this.setState({ master: data.sort() }, () => {
           console.log("master count " + this.state.master.length);
           // now load data based on pagination length
           this.setState({ data: this.state.master.slice(start, end) }, () => {
@@ -239,7 +277,10 @@ class chuppiGridAllBrands extends Component {
           this.setState({ status: "" });
         })
       )
-      .catch(e => {console.log("Error", e);this.setState({ status: e.toString()});});
+      .catch(e => {
+        console.log("Error", e);
+        this.setState({ status: e.toString() });
+      });
   }
 
   sortitems() {
@@ -249,7 +290,7 @@ class chuppiGridAllBrands extends Component {
       this.setState({ pagination: { start: 0, end: 100 } });
       var { start, end } = this.state.pagination;
       var toSort = this.state.master;
-      !this.state.sortasc ? toSort.sort().reverse() : toSort.sort();
+      !this.state.sortasc ? toSort.sort() : toSort.sort().reverse();
       this.setState({ data: toSort.slice(start, end) }, () => {
         console.log("Sorted..");
       });
@@ -283,15 +324,6 @@ class chuppiGridAllBrands extends Component {
 
   refresh(e) {
     //load from master based on pagination
-    //   // reset text
-    //   var { start, end } = this.state.pagination;
-    //   this.setState({
-    //     data: this.state.master.slice(start, end),
-    //     searchOptions: { search: "" },
-    //     filtercount:0
-    //   });
-    // }
-    //load from master based on pagination
     // reset text
     if (this.state.master) {
       var { start, end } = this.state.pagination;
@@ -302,7 +334,7 @@ class chuppiGridAllBrands extends Component {
       });
     } else {
       //fetch again
-      this.getDataCustom(this.state.input);
+      this.getDataCustom();
     }
   }
 
@@ -313,16 +345,6 @@ class chuppiGridAllBrands extends Component {
           <header>
             {this.state.data ? (
               <div className="chuppiInfo">
-                <div
-                  className="chuppiInfoChild"
-                  //   style={{ display: "flex", alignItems: "center" }}
-                >
-                  {[
-                    "text: " + this.state.searchOptions.search,
-                    this.state.master.length + " - items on sale!!"
-                  ].join(" >> ")}
-                </div>
-
                 <div className="chuppiInfoChild">
                   {/* show prev only when start is more than 0 */}
                   {this.state.pagination.start > 0 ? (
@@ -368,8 +390,9 @@ class chuppiGridAllBrands extends Component {
                           this.sortitems();
                         }}
                       >
-                        Sort By Brand {!this.state.sortasc ? "V" : "^"}
+                        Sort By Label {!this.state.sortasc ? "V" : "^"}
                       </Button>
+
                       {"  "}
                       <Button
                         size="sm"
@@ -398,35 +421,12 @@ class chuppiGridAllBrands extends Component {
           <div className="searchBar container">
             <Form>
               <FormGroup>
-                {/* </FormGroup>
-            <FormGroup> */}
-                {/*
-             <Label for="price">Price</Label>
-                <Input
-                  type="number"
-                  name="price"
-                  id="price"
-                  placeholder="10"
-                  value={this.state.searchOptions.price}
-                  onChange={e => this.onChangeValue(e, e.target.name)}
-                />
-             
-                <Label for="savings">% off</Label>
-                <Input
-                  type="number"
-                  name="savings"
-                  id="savings"
-                  placeholder="10"
-                  value={this.state.searchOptions.savings}
-                  onChange={e => this.onChangeValue(e, e.target.name)}
-                />
-            */}
                 <Label for="keywords">Search Text</Label>
                 <Input
                   type="test"
                   name="search"
                   id="search"
-                  placeholder="Dyson"
+                  placeholder="hammer"
                   value={this.state.searchOptions.search}
                   onChange={e => this.onChangeValue(e, e.target.name)}
                 />
@@ -438,7 +438,7 @@ class chuppiGridAllBrands extends Component {
                   onClick={e => this.filter(e)}
                   block
                 >
-                  Find Brand
+                  Find Item
                 </Button>
                 <br />
                 <Button
@@ -458,36 +458,60 @@ class chuppiGridAllBrands extends Component {
             </Form>
           </div>
 
-          <div className="chuppiGrid" style={{ minHeight: "84vh" }}>
+          <div className="chuppiGridLabelAll" style={{ minHeight: "84vh" }}>
             {this.state.data
               ? this.state.data.map((i, j) => (
-                  <div key={j} className="chuppiGridPodB">
-                    <div className="chuppiGridBrand">
-                      <a className="joe" href={"/chuppiGridBrand/" + i.brand}>
-                        {/* <Button block size="sm" color="q"> */}
-                          {i.brand}
-                        {/* </Button> */}
-                      </a>
-                    </div>
+                  <div key={j} className="chuppiGridPodLabel">
+                    <div className="chuppiGridItemLabel">
+                     
+                      {/* <Link
+                        onMouseOver={e =>
+                          this.setState({
+                            currentItem: e.target.text,
+                            showButton: 1
+                          })
+                        }
+                        className="text-secondary"
+                        to={"/chuppiGridProducts/" + i}
+                      > */}
+                        {i}
+                      {/* </Link> */}
 
-                    <div className="chuppiGridCount">
-                      {i.counts} Brands on sale..
-                    </div>
+                      {this.state.currentItem ? (
+                        this.state.currentItem === i &&
+                        this.state.showButton ? (
+                          <Button
+                            size="sm"
+                            color="dark"
+                            block
+                            style={{ marginTop: "20px" }}
+                            onClick={e =>
+                              this.loadimagedata(this.state.currentItem)
+                            }
+                          >
+                            View
+                          </Button>
+                        ) : null
+                      ) : null}
 
-                    {/* <Badge color="s">
-                      Price: ${i.minPrice} - ${i.maxPrice}
-                    </Badge>
-
-                    <div className="chuppiGridSavingsB">
-                      
-                        <Badge color="s">
-                          <div className="chuppiGridMinPrice">
-                            Savings: {i.minSavings}% - {i.maxSavings}%
+                      {/* Loading images */}
+                      {this.state.itemData ? (
+                        this.state.itemData.currentItem ===
+                        this.getitemID(i) ? (
+                          <div className="chuppiGridImage-label">
+                            <img
+                              className="chuppi-item-img-label"
+                              src={
+                                this.state.itemData
+                                  ? this.state.itemData.img
+                                  : null
+                              }
+                              alt="Fetching..."
+                            />
                           </div>
-                        
-                        </Badge>
-                      
-                    </div> */}
+                        ) : null
+                      ) : null}
+                    </div>
                   </div>
                 ))
               : null}
@@ -544,7 +568,7 @@ class chuppiGridAllBrands extends Component {
                         this.sortitems();
                       }}
                     >
-                      Sort By Brand {!this.state.sortasc ? "V" : "^"}
+                      Sort By Label {!this.state.sortasc ? "V" : "^"}
                     </Button>
                     {"  "}
 
@@ -574,4 +598,4 @@ class chuppiGridAllBrands extends Component {
   }
 }
 
-export default chuppiGridAllBrands;
+export default chuppiGridLablesAll;

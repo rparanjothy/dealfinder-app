@@ -12,7 +12,7 @@
 .joe
 {
   color: black;
-  background-color: rgb(194, 194, 194);
+  /* background-color: rgb(194, 194, 194); */
   display:block;
   font-weight: bold
 }

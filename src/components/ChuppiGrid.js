@@ -44,9 +44,16 @@ class chuppiGrid extends Component {
   }
 
   getlabels() {
+    const pattern = /^[A-Za-z].*/;
+
     axios
       .get([config.APIURL, "prodlabel"].join("/"))
       .then(x => x.data.labels)
+      .then(labels =>
+        labels
+          .filter(label => label.charAt(0) === label.charAt(0).toUpperCase())
+          .filter(firstWord => pattern.test(firstWord))
+      )
       .then(labels =>
         this.setState({ labels }, () => {
           console.log("labels loaded", this.state.labels.length);
@@ -436,12 +443,14 @@ class chuppiGrid extends Component {
                 </FormGroup>
 
                 {/* dynamic filter */}
-                {this.state.filteredLabel ? (
+                {(this.state.filteredLabel && this.state.filteredLabel.length) ? (
                   <div className="dynamic-filter-result">
                     <Button size="sm" block disabled>Matches</Button>
                     <div className="label-container">
                       {this.state.filteredLabel.map(lbl => (
-                        <div>{lbl}</div>
+                        <div>
+                          <Link style={{color:"rgb(160,160,160)"}}  to={"/chuppiGridProducts/"+lbl}>{lbl}</Link>
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -466,10 +475,11 @@ class chuppiGrid extends Component {
 
                 {this.state.brands.map(brand => (
                   <Badge className="brand-label" color="link">
-                    <Link
+                    {/* <Link
                       style={{ color: "gray" }}
                       to={"/chuppiGridBrand/" + brand}
-                    >
+                    > */}
+                    <Link style={{color:"rgb(160,160,160)"}}   to={"/chuppiGridBrand/" + brand}>
                       {brand}
                     </Link>
                   </Badge>
