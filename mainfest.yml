@@ -1,0 +1,6 @@
+---
+applications:
+- name: dealfinder-app
+ path: build
+ memory: 64MB
+ buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
