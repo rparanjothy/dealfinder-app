@@ -170,8 +170,12 @@ def returnResult(pct,minPrice='9999999'):
 
     if prdnamefilter:
         #result=result.loc[result['productname'].str.decode('utf-8').str.contains(prdnamefilter,regex=False,case=False) ,:]
-        result=result.loc[(result['productname'].str.decode('utf-8').str.contains(prdnamefilter,regex=False,case=False)) | (result['brand'].str.decode('utf-8').str.contains(prdnamefilter,regex=False,case=False)),:]
+        # Search only product name Ram
+        #result=result.loc[(result['productname'].str.decode('utf-8').str.contains(prdnamefilter,regex=False,case=False)) 
+        #| (result['brand'].str.decode('utf-8').str.contains(prdnamefilter,regex=False,case=False)),:]
         
+        result=result.loc[(result['productname'].str.decode('utf-8').str.contains(prdnamefilter,regex=False,case=False)),:]
+
     #result=result.loc[:,['itemid','price','was','savings','brand','productname']]
     ct=len(result)    
     if sortby:

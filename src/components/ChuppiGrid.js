@@ -486,18 +486,32 @@ class chuppiGrid extends Component {
                       style={{ color: "gray" }}
                       to={"/chuppiGridBrand/" + brand}
                     > */}
-                    <Link
-                      style={{ color: "rgb(160,160,160)" }}
-                      to={[
-                        "/chuppiGridBrand",
-                        brand,
-                        this.state.searchOptions.savings,
-                        this.state.searchOptions.price,
-                        this.state.searchOptions.search
-                      ].join("/")}
-                    >
-                      {brand}
-                    </Link>
+                    {this.state.searchOptions.search !== "" ? (
+                      <Link
+                        style={{ color: "rgb(160,160,160)" }}
+                        to={[
+                          "/chuppiGridBrand",
+                          brand,
+                          this.state.searchOptions.savings,
+                          this.state.searchOptions.price,
+                          this.state.searchOptions.search
+                        ].join("/")}
+                      >
+                        {brand}
+                      </Link>
+                    ) : (
+                      <Link
+                        style={{ color: "rgb(160,160,160)" }}
+                        to={[
+                          "/chuppiGridBrand",
+                          brand,
+                          this.state.searchOptions.savings,
+                          this.state.searchOptions.price
+                        ].join("/")}
+                      >
+                        {brand}
+                      </Link>
+                    )}
                   </Badge>
                 ))}
               </div>
