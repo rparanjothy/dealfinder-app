@@ -46,14 +46,14 @@ class ChuppiImageSlider extends Component {
 
     setTimeout(() => {
       const { st, ed } = this.state.scroll;
-      console.log(st, ed);
+      // console.log(st, ed);
 
       const dd = this.props.bannerData.slice(st, ed);
 
       if (dd.length) {
-        dd.map((e, i) => {
-          console.log(e.itemid, e.price, i);
-        });
+        // dd.map((e, i) => {
+        //   console.log(e.itemid, e.price, i);
+        // });
 
         this.setState(
           {
@@ -147,7 +147,7 @@ class ChuppiImageSlider extends Component {
           this.setState(
             { bannerItemsRender: bannerItems },
             () => {
-              console.log("set bannerItemsRender");
+              // console.log("set bannerItemsRender");
             }
           );
         }
