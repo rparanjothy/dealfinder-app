@@ -186,7 +186,9 @@ class ChuppiImageSlider extends Component {
               this.img1 = e.imageurlBanner;
               this.img1Name = e.productname;
               this.img1Price = e.price;
-              this.img1url = e.itemid;
+              // this.img1url = e.itemid;
+              this.img1url = e.itemid.toString().includes("/")?e.itemid:[config.SEARCHURL,"s",e.itemid].join("/");
+
               this.img1inv = e.inv;
               break;
 
@@ -195,7 +197,7 @@ class ChuppiImageSlider extends Component {
               this.img2 = e.imageurlBanner;
               this.img2Name = e.productname;
               this.img2Price = e.price;
-              this.img2url = e.itemid;
+              this.img2url = e.itemid.toString().includes("/")?e.itemid:[config.SEARCHURL,"s",e.itemid].join("/");
               this.img2inv = e.inv;
 
               break;
@@ -205,7 +207,7 @@ class ChuppiImageSlider extends Component {
               this.img3 = e.imageurlBanner;
               this.img3Name = e.productname;
               this.img3Price = e.price;
-              this.img3url = e.itemid;
+              this.img3url = e.itemid.toString().includes("/")?e.itemid:[config.SEARCHURL,"s",e.itemid].join("/");
               this.img3inv = e.inv;
               break;
 
@@ -214,7 +216,7 @@ class ChuppiImageSlider extends Component {
               this.img4 = e.imageurlBanner;
               this.img4Name = e.productname;
               this.img4Price = e.price;
-              this.img4url = e.itemid;
+              this.img4url = e.itemid.toString().includes("/")?e.itemid:[config.SEARCHURL,"s",e.itemid].join("/");
               this.img4inv = e.inv;
               break;
             default:
