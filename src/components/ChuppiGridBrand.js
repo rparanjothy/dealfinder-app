@@ -283,6 +283,7 @@ class chuppiGridBrand extends Component {
         )
       )
 
+      
       .then(data =>
         this.setState({ master: data }, () => {
           console.log("master count " + this.state.master.length);
