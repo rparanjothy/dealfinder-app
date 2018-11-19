@@ -361,7 +361,7 @@ class chuppiGridProducts extends Component {
                         }}
                       >
                         Sort By Price {!this.state.sortasc ? "V" : "^"}
-                      </Button>
+                      </Button> {"  "}
 
                       <Button
                         size="sm"
@@ -370,7 +370,7 @@ class chuppiGridProducts extends Component {
                         }}
                       >
                         Sort By Savings {!this.state.sortasc ? "V" : "^"}
-                      </Button>
+                      </Button>{"  "}
 
                       <Button
                         size="sm"
@@ -575,7 +575,7 @@ class chuppiGridProducts extends Component {
                       }}
                     >
                       Sort By Price {!this.state.sortasc ? "V" : "^"}
-                    </Button>
+                    </Button>{"  "}
 
                     <Button
                       size="sm"
@@ -584,7 +584,7 @@ class chuppiGridProducts extends Component {
                       }}
                     >
                       Sort By Savings {!this.state.sortasc ? "V" : "^"}
-                    </Button>
+                    </Button>{"  "}
 
                     <Button
                       size="sm"
