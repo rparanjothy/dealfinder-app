@@ -1,0 +1,5 @@
+---
+applications:
+- name: dealfinder-app
+ path: build
+ memory: 256MB

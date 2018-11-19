@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "dealFinder server",
-  "main": "server.js",
+  "main": "App.js",
   "scripts": {
     "start": "node App.js",
     "dev": "nodemon App.js"
@@ -10,9 +10,7 @@
   "author": "RamParanjothy",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/storage": "^2.3.0",
-    "express": "^4.16.4",
-    "split2": "^3.0.0"
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "nodemon": "^1.18.6"
