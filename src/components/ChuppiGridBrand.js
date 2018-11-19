@@ -286,7 +286,7 @@ class chuppiGridBrand extends Component {
       .then(data =>
         this.setState({ master: data }, () => {
           console.log("master count " + this.state.master.length);
-          console.log("master  " + this.state.master);
+          // console.log("master  " + this.state.master);
           // now load data based on pagination length
           this.setState({ data: this.state.master.slice(start, end) }, () => {
             // console.log(this.state.data);
