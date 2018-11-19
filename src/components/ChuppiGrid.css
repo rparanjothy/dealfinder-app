@@ -9,6 +9,7 @@
   color: black;
 }
 
+
 .joe
 {
   color: black;
@@ -155,6 +156,23 @@
   padding-top: 1%;
   /* background-color:rgb(235, 231, 232); */
  
+}
+
+.imageBanner{ border-bottom: 1px solid  rgb(238, 238, 238)}
+
+.imageBannerPod{
+  display: flex;
+  padding-left: 10px; 
+  width:150px;
+  height:150px;
+  object-fit: contain;
+  
+}
+
+.banner-item-img{
+  width:150px;
+  height:150px;
+
 }
 
 .chuppiGridItemLabelAll{

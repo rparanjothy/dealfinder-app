@@ -4,6 +4,7 @@ import { Badge, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./ChuppiGrid.css";
 import config from "../config/AppConfig";
+import ChuppiImageSlider from "./ChuppiImageSlider";
 
 class chuppiGrid extends Component {
   constructor(props) {
@@ -21,6 +22,12 @@ class chuppiGrid extends Component {
     this.btnToggle = true;
     this.goNext = this.goNext.bind(this);
     this.goPrev = this.goPrev.bind(this);
+    this.getitemID = this.getitemID.bind();
+    // this.cycleBannerImages = this.cycleBannerImages.bind(this);
+    // this.getImageForBanner = this.getImageForBanner.bind(this);
+    // this.updateImageUrlforBannerItem = this.updateImageUrlforBannerItem.bind(
+    //   this
+    // );
   }
 
   componentWillMount() {
@@ -139,6 +146,40 @@ class chuppiGrid extends Component {
       .catch(err => console.log(err));
   }
 
+  // getImageForBanner(itemid) {
+  //   // const itemid = e.target.text;
+  //   // var imgURL = null;
+  //   var imgurlR = "https://goo.geel/images/5iqKX2";
+  //   const url = config.IMGURL + itemid + "/stores/8119/listings";
+  //   console.log(url);
+  //   axios
+  //     .get(url)
+  //     .then(response => {
+  //       this.setState(
+  //         {
+  //           bannerData: [
+  //             ...this.state.bannerData,
+  //             {
+  //               bannerimageid: itemid,
+  //               bannerimageUrl: response.data.items[0].imageResources[0].urls[0].url.replace(
+  //                 "_400",
+  //                 "_300"
+  //               )
+  //             }
+  //           ]
+  //         },
+  //         () => {
+  //           console.log(this.state.bannerData);
+  //         }
+  //       );
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+
+  //   return imgurlR;
+  // }
+
   getitemID(x) {
     //console.log(typeof(x));
     return x.toString().includes("/") ? x.split("/").pop() : x;
@@ -197,8 +238,8 @@ class chuppiGrid extends Component {
                   filteredLabel: this.state.labels.filter(label =>
                     label.toLowerCase().includes(l.toLowerCase())
                   )
-                },
-                () => console.log(this.state.filteredLabel)
+                }
+                // ,() => console.log(this.state.filteredLabel)
               );
               // .map(matches => {console.log("**");console.log(matches);return matches})
             } else {
@@ -240,16 +281,23 @@ class chuppiGrid extends Component {
         this.setState({ master: data }, () => {
           console.log("master count " + this.state.master.length);
           // now load data based on pagination length
-          this.setState({ data: this.state.master.slice(start, end) }, () => {
-            // console.log(this.state.data);
-            // load distinct brands
-            const availableBrands = new Set();
-            this.state.master.map(e => {
-              availableBrands.add(e.brand);
-            });
-            this.setState({ brands: [...availableBrands.values()].sort() });
-          });
+          this.setState(
+            {
+              data: this.state.master.slice(start, end),
+              bannerData: this.state.master.slice(start, end)
+            },
+            () => {
+              // console.log(this.state.data);
+              // load distinct brands
+              const availableBrands = new Set();
+              this.state.master.map(e => {
+                return availableBrands.add(e.brand);
+              });
+              this.setState({ brands: [...availableBrands.values()].sort() });
+            }
+          );
           this.setState({ status: "" });
+          //           setTimeout(() => this.cycleBannerImages(0, 3), 1000);
         })
       )
       .catch(e => {
@@ -403,6 +451,15 @@ class chuppiGrid extends Component {
           </header>
         </div>
 
+        <div className="row1 imageBanner">
+          {this.state.data ? (
+            <ChuppiImageSlider
+              bannerData={this.state.master}
+              getitemID={this.getitemID}
+            />
+          ) : null}
+        </div>
+
         <div className="row1">
           <div className="col-1">
             <div className="1searchBar 1container ">
@@ -463,9 +520,13 @@ class chuppiGrid extends Component {
                   </div>
                 ) : null}
 
-                <Button size="sm" block onClick={e => this.load()}>
-                  Find Deals !
-                </Button>
+                {this.state.labels ? (
+                  <Button size="sm" block onClick={e => this.load()}>
+                    Find Deals !
+                  </Button>
+                ) : (
+                  "Loading..."
+                )}
               </Form>
             </div>
 

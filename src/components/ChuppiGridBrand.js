@@ -3,6 +3,7 @@ import axios from "axios";
 import { Badge, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import "./ChuppiGrid.css";
 import config from "../config/AppConfig";
+import ChuppiImageSlider from './ChuppiImageSlider'
 
 class chuppiGridBrand extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class chuppiGridBrand extends Component {
         searchOptions: { price, savings, search },
         //Added Pagination
         pagination: { start: 0, end: 100 },
-        sortasc: true
+        sortasc: false
       },
       () => {
         console.log("dss", this.state.input);
@@ -457,6 +458,14 @@ class chuppiGridBrand extends Component {
               this.state.status
             )}
           </header>
+        </div>
+        <div className="row1 imageBanner">
+          {this.state.data ? (
+            <ChuppiImageSlider
+              bannerData={this.state.master}
+              getitemID={this.getitemID}
+            />
+          ) : null}
         </div>
 
         <div className="row1">

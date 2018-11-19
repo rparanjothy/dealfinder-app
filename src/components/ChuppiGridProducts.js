@@ -3,6 +3,7 @@ import axios from "axios";
 import { Badge, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import "./ChuppiGrid.css";
 import config from "../config/AppConfig";
+import ChuppiImageSlider from "./ChuppiImageSlider";
 
 class chuppiGridProducts extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class chuppiGridProducts extends Component {
         searchOptions: { price: 9999999, savings: 1, search: "" },
         //Added Pagination
         pagination: { start: 0, end: 100 },
-        sortasc:true
+        sortasc: true
       },
       () => {
         console.log("dss", this.state.input);
@@ -235,6 +236,7 @@ class chuppiGridProducts extends Component {
           // now load data based on pagination length
           this.setState({ data: this.state.master.slice(start, end) }, () => {
             // console.log(this.state.data);
+            this.sortitems()
           });
           this.setState({ status: "" });
         })
@@ -249,7 +251,7 @@ class chuppiGridProducts extends Component {
       this.setState({ pagination: { start: 0, end: 100 } });
       var { start, end } = this.state.pagination;
       var toSort = this.state.master;
-      !this.state.sortasc
+      this.state.sortasc
         ? toSort.sort((a, b) => a["price"] - b["price"])
         : toSort.sort((a, b) => b["price"] - a["price"]);
       this.setState({ data: toSort.slice(start, end) }, () => {
@@ -360,7 +362,7 @@ class chuppiGridProducts extends Component {
                       >
                         Sort By Price {!this.state.sortasc ? "V" : "^"}
                       </Button>
-                      {"  "}
+
                       <Button
                         size="sm"
                         onClick={e => {
@@ -369,7 +371,7 @@ class chuppiGridProducts extends Component {
                       >
                         Sort By Savings {!this.state.sortasc ? "V" : "^"}
                       </Button>
-                      {"  "}
+
                       <Button
                         size="sm"
                         onClick={e => {
@@ -388,7 +390,14 @@ class chuppiGridProducts extends Component {
             )}
           </header>
         </div>
-
+        <div className="row1 imageBanner">
+          {this.state.data ? (
+            <ChuppiImageSlider
+              bannerData={this.state.master}
+              getitemID={this.getitemID}
+            />
+          ) : null}
+        </div>
         <div className="row1">
           <div className="searchBar container">
             <Form>
@@ -513,6 +522,7 @@ class chuppiGridProducts extends Component {
               : null}
           </div>
         </div>
+
         <div
           className="row2 bottom-footer"
           style={{ display: "flex", alignItems: "flex-end" }}
@@ -566,7 +576,7 @@ class chuppiGridProducts extends Component {
                     >
                       Sort By Price {!this.state.sortasc ? "V" : "^"}
                     </Button>
-                    {"  "}
+
                     <Button
                       size="sm"
                       onClick={e => {
@@ -575,7 +585,7 @@ class chuppiGridProducts extends Component {
                     >
                       Sort By Savings {!this.state.sortasc ? "V" : "^"}
                     </Button>
-                    {"  "}
+
                     <Button
                       size="sm"
                       onClick={e => {

@@ -1,0 +1,42 @@
+.SliderContainer {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  padding-bottom: 10px;
+}
+
+.slider-item-img {
+  padding: 0px 20px 0px 20px;
+  align-self: flex-start;
+  font-size: small;
+}
+
+.slider-item-img img {
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.reset{
+  order:1
+}
+
+.next{order:3}
+
+.prev{order:2}
+
+.img-desc {
+  word-wrap: break-word;
+  width: 200px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+
+}
+
+.img-price{
+  font-size: 20px;
+}
+
+
+.jo {
+    color: black;
+  }
