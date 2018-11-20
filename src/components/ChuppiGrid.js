@@ -578,7 +578,9 @@ class chuppiGrid extends Component {
               </div>
             ) : null}
           </div>
-          <div className="chuppiGrid" style={{ minHeight: "84vh" }}>
+          <div className="chuppiGrid">
+          {/* <div className="chuppiGrid" style={{ minHeight: "84vh" }}> */}
+
             {this.state.data
               ? this.state.data.map((i, j) => (
                   <div key={j} className="chuppiGridPod">

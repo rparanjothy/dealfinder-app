@@ -30,7 +30,7 @@ class Footer extends React.Component {
         <div><img style={{width:"80px",height:"60px"}}src={node} alt="node"/></div>
         <div><img style={{width:"100px",height:"60px"}}src={pandas} alt="pandas"/></div>
         <div><img style={{width:"60px",height:"60px"}}src={react} alt="react"/></div>
-        <div><img style={{width:"150px",height:"60px"}}src={gunicorn} alt="gunicorn"/></div>
+        <div><img style={{width:"180px",height:"60px"}}src={gunicorn} alt="gunicorn"/></div>
         <div><img style={{width:"60px",height:"60px"}}src={jamesbond} alt="jamesbond"/></div>
         <div><img style={{width:"60px",height:"60px"}}src={gcp} alt="gcp"/></div>
         <div><img style={{width:"60px",height:"60px"}}src={pcf} alt="pcf"/></div>
