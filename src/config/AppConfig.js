@@ -4,7 +4,8 @@
  
 // const IMGURL = "http://origin-api.gcp-prod.homedepot.com/catalog/v1/items/"
 
-const APIURL = "http://localhost:5000"
+// const APIURL = "http://localhost:5000"
+const APIURL = "https://dealfinderapi.apps-np.homedepot.com"
 const IMGURL = "http://origin-api.gcp-stage.homedepot.com/catalog/v1/items/"
 const SEARCHURL="http://www.homedepot.com"
 const config={APIURL,IMGURL,SEARCHURL}

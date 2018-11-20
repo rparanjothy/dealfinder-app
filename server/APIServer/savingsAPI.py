@@ -187,70 +187,70 @@ def returnResult(pct,minPrice='9999999'):
     
     return jsonify({"message":lbl, "data":to_json(result)})
 
-if __name__ == '__main__':
-    pd.set_option('display.max_colwidth', -1)
-    hme=os.path.join(os.curdir,'templates')
-    datahme=os.path.join(os.curdir,'data')
-    savings=os.path.join(datahme,'OnlineWas2PriceInventoryExtract.del')
-    prodname=os.path.join(datahme,'PRODUCT-NAME.del')
-    prodbrnd=os.path.join(datahme,'PRODUCT-BRAND.del')
-    
+pd.set_option('display.max_colwidth', -1)
+hme=os.path.join(os.curdir,'templates')
+datahme=os.path.join(os.curdir,'data')
+savings=os.path.join(datahme,'OnlineWas2PriceInventoryExtract.del')
+prodname=os.path.join(datahme,'PRODUCT-NAME.del')
+prodbrnd=os.path.join(datahme,'PRODUCT-BRAND.del')
 
-    df=pd.read_table(savings,sep='|',names=['itemid','price','was'])
+
+df=pd.read_table(savings,sep='|',names=['itemid','price','was'])
 #    prdnmdf=pd.read_table(prodname,sep='|',names=['itemid','guid','productname','usage','1','2','3'])
-    prdnmdf=pd.read_table(prodname,sep='|',names=['itemid','productname'])
-    prdbrnddf=pd.read_table(prodbrnd,sep='|',names=['itemid','brand'])
-    
-    # filer for values with was price
-    #df=df.loc[df['was'].isna()!=True,:]
-    df=df.dropna()
+prdnmdf=pd.read_table(prodname,sep='|',names=['itemid','productname'])
+prdbrnddf=pd.read_table(prodbrnd,sep='|',names=['itemid','brand'])
 
-    # fillval={'was':-1,'savings':111}
-    # df=df.fillna(value=fillval)
+# filer for values with was price
+#df=df.loc[df['was'].isna()!=True,:]
+df=df.dropna()
 
-    # df.loc[df['was']!=None,['was']]=df['price']
+# fillval={'was':-1,'savings':111}
+# df=df.fillna(value=fillval)
 
-    df['savings']=((df['was']-df['price'])/df['was']*100).round(2)    
-    df['discount']=(df['was']-df['price'])
-    df=df.join(prdnmdf.set_index('itemid'),on='itemid',rsuffix='_n')
-    df=df.join(prdbrnddf.set_index('itemid'),on='itemid',rsuffix='_b')
-    
-    fillval={'productname':'Product_Name_Missing','brand':'Brand_Missing'}
-    #master=df.join(prdnmdf.set_index('itemid'),on='itemid',lsuffix='gs')
-    master=df.fillna(value=fillval)
-    priceBin=np.linspace(0,500,11)
-    priceBin.put(-1,9999999)
-    
-    
-    master=master.sort_values(by=['savings'],kind='quicksort')
-    
-    
+# df.loc[df['was']!=None,['was']]=df['price']
+
+df['savings']=((df['was']-df['price'])/df['was']*100).round(2)    
+df['discount']=(df['was']-df['price'])
+df=df.join(prdnmdf.set_index('itemid'),on='itemid',rsuffix='_n')
+df=df.join(prdbrnddf.set_index('itemid'),on='itemid',rsuffix='_b')
+
+fillval={'productname':'Product_Name_Missing','brand':'Brand_Missing'}
+#master=df.join(prdnmdf.set_index('itemid'),on='itemid',lsuffix='gs')
+master=df.fillna(value=fillval)
+priceBin=np.linspace(0,500,11)
+priceBin.put(-1,9999999)
+
+
+master=master.sort_values(by=['savings'],kind='quicksort')
+
+
 #    byBrand=master.groupby(by='brand')['itemid'].count().to_frame().reset_index()
-    byBrand=master.groupby(by='brand')['itemid'].count().to_frame()
-    byBrand=byBrand.rename(columns={'itemid':'counts'})
-    brandmin=master.groupby(by='brand')['savings'].min()
-    brandmax=master.groupby(by='brand')['savings'].max()
-    brandminprc=master.groupby(by='brand')['price'].min()
-    brandmaxprc=master.groupby(by='brand')['price'].max()
-    
-    byBrand['minSavings']=brandmin
-    byBrand['maxSavings']=brandmax   
-    byBrand['minPrice']=brandminprc
-    byBrand['maxPrice']=brandmaxprc 
-    byBrand=byBrand.reset_index()
-    byBrand['brandURL']=byBrand['brand'].map(lambda x:getBrandItems(x))
-    
-    master['category']=pd.cut(master['price'],priceBin,labels=['$0 < $50','$50 < $100','$100 < $150','$150 < $200','$200 < $250','$250 < $300','$300 < $350','$350 < $400','$400 < $450','> $450'])
-    ByPriceRange=master.groupby('category')['itemid'].count().to_frame().reset_index()
-    
-    #freqDist
-    o=[]
-    for x in master['productname'].str.decode('utf-8').str.lower():
-        o+=nltk.wordpunct_tokenize(x) 
-    
-    o=[x for x in o if len(x) >=3 ]    
-    prodnamefreqdist=nltk.FreqDist(o)
-    #freqdict={k:v for k,v prodnamefreqdist.iteritems()}    
+byBrand=master.groupby(by='brand')['itemid'].count().to_frame()
+byBrand=byBrand.rename(columns={'itemid':'counts'})
+brandmin=master.groupby(by='brand')['savings'].min()
+brandmax=master.groupby(by='brand')['savings'].max()
+brandminprc=master.groupby(by='brand')['price'].min()
+brandmaxprc=master.groupby(by='brand')['price'].max()
 
-    
+byBrand['minSavings']=brandmin
+byBrand['maxSavings']=brandmax   
+byBrand['minPrice']=brandminprc
+byBrand['maxPrice']=brandmaxprc 
+byBrand=byBrand.reset_index()
+byBrand['brandURL']=byBrand['brand'].map(lambda x:getBrandItems(x))
+
+master['category']=pd.cut(master['price'],priceBin,labels=['$0 < $50','$50 < $100','$100 < $150','$150 < $200','$200 < $250','$250 < $300','$300 < $350','$350 < $400','$400 < $450','> $450'])
+ByPriceRange=master.groupby('category')['itemid'].count().to_frame().reset_index()
+
+#freqDist
+o=[]
+for x in master['productname'].str.decode('utf-8').str.lower():
+    o+=nltk.wordpunct_tokenize(x) 
+
+o=[x for x in o if len(x) >=3 ]    
+prodnamefreqdist=nltk.FreqDist(o)
+#freqdict={k:v for k,v prodnamefreqdist.iteritems()}    
+
+if __name__ == '__main__':
     app.run(host='0.0.0.0',port=os.getenv('PORT',5000),debug=False)
+        # app.run(debug=False)
