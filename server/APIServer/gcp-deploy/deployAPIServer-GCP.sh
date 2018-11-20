@@ -17,4 +17,4 @@ source ./venv/bin/activate
 
 cd /var/dealfinder/APIServer
 sudo pip install -r /var/dealfinder/requirements.txt
-sudo gunicorn savingsAPI:app --bind 0.0.0.0:80
+sudo gunicorn savingsAPI:app --bind 0.0.0.0:80 --workers=3 --access-logfile /var/dealfinder/dealfinder.log
