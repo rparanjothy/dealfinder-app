@@ -3,8 +3,8 @@
 # dependencies
 /node_modules
 /server/node_modules
-/server/data/*.del
-/server/data/data.zip
+/server/APIServer/data/*.del
+/server/APIServer/data/data.zip
 
 /.pnp
 .pnp.js
