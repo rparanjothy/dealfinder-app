@@ -26,6 +26,7 @@ class chuppiGridBrand extends Component {
 
   componentWillMount() {
     var { msg, price, savings, search } = this.props.match.params;
+    document.title={msg}
     price = price ? price : 9999998;
     savings = savings ? savings : 1;
     search = search ? search : "";

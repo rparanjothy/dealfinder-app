@@ -6,6 +6,7 @@ import "./ChuppiGrid.css";
 import config from "../config/AppConfig";
 import ChuppiImageSlider from "./ChuppiImageSlider";
 
+
 class chuppiGrid extends Component {
   constructor(props) {
     super(props);
@@ -467,7 +468,7 @@ class chuppiGrid extends Component {
                 <FormGroup>
                   {/* </FormGroup>
             <FormGroup> */}
-
+        
                   <Label for="price">Price</Label>
                   <Input
                     type="text"

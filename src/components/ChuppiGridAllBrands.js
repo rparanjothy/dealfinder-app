@@ -24,6 +24,7 @@ class chuppiGridAllBrands extends Component {
   }
 
   componentWillMount() {
+    document.title="All Brands"
     const { msg } = this.props.match.params;
     this.setState(
       {
@@ -471,7 +472,7 @@ class chuppiGridAllBrands extends Component {
                     </div>
 
                     <div className="chuppiGridCount">
-                      {i.counts} Brands on sale..
+                      <Badge>{i.counts} </Badge>
                     </div>
 
                     {/* <Badge color="s">

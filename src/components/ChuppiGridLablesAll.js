@@ -26,6 +26,7 @@ class chuppiGridLablesAll extends Component {
 
   componentWillMount() {
     console.log("mountin");
+    document.title="All labels"
     const { msg } = this.props.match.params;
     this.setState(
       {

@@ -13,9 +13,9 @@
 .joe
 {
   color: black;
-  /* background-color: rgb(194, 194, 194); */
   display:block;
-  font-weight: bold
+  text-align: left;
+  word-wrap: break-word;
 }
 .row1 {
   display: flex;
@@ -268,19 +268,20 @@
 
 .chuppiGridPodB{
   font-size: small;
-  min-height: 50px;
-  min-width:150px;
+  min-height: 20px;
+  width:180px;
   border: 1px solid rgb(238, 238, 238);
   border-radius: 7px;
   margin-bottom: 10px;
   display:flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content:space-between;
   position: relative;
 
 }
 
 .chuppiGridCount{
-  margin-top: 20px
+  margin-top: 2px
 }
 
 .chuppiGridSavingsB{

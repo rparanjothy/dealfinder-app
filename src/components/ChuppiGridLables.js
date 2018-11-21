@@ -26,6 +26,7 @@ class chuppiGridLables extends Component {
 
   componentWillMount() {
     console.log("mountin");
+    document.title="Product Categories"
     const { msg } = this.props.match.params;
     this.setState(
       {

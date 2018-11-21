@@ -125,7 +125,9 @@ def getProdLabelAll():
     out=[s_ for s_ in set(x)]
     return jsonify({"labels":out})
 
-
+@app.route('/stats')
+def getCt():
+    return jsonify({'ct':len(master)})
 
 @app.route("/prodlabelitemid")
 def getProdLabelitemid():
