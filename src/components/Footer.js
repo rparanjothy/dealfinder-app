@@ -25,15 +25,15 @@ class Footer extends React.Component {
     return (
         <div className="Footer">
         <div className="Footer images">
-        <div><img style={{width:"60px",height:"60px"}}src={python} alt="pythonLogo"/></div>
-        <div><img style={{width:"100px",height:"60px"}}src={flask} alt="flask"/></div>
-        <div><img style={{width:"100px",height:"60px"}}src={node} alt="node"/></div>
-        <div><img style={{width:"100px",height:"60px"}}src={pandas} alt="pandas"/></div>
-        <div><img style={{width:"60px",height:"60px"}}src={react} alt="react"/></div>
-        <div><img style={{width:"180px",height:"60px"}}src={gunicorn} alt="gunicorn"/></div>
-        <div><img style={{width:"60px",height:"60px"}}src={jamesbond} alt="jamesbond"/></div>
-        <div><img style={{width:"60px",height:"60px"}}src={gcp} alt="gcp"/></div>
-        <div><img style={{width:"60px",height:"60px"}}src={pcf} alt="pcf"/></div>
+        <div><img style={{width:"30px",height:"30px"}}src={python} alt="pythonLogo"/></div>
+        <div><img style={{width:"50px",height:"30px"}}src={flask} alt="flask"/></div>
+        <div><img style={{width:"50px",height:"30px"}}src={node} alt="node"/></div>
+        <div><img style={{width:"50px",height:"30px"}}src={pandas} alt="pandas"/></div>
+        <div><img style={{width:"30px",height:"30px"}}src={react} alt="react"/></div>
+        <div><img style={{width:"50px",height:"30px"}}src={gunicorn} alt="gunicorn"/></div>
+        <div><img style={{width:"30px",height:"30px"}}src={jamesbond} alt="jamesbond"/></div>
+        <div><img style={{width:"30px",height:"30px"}}src={gcp} alt="gcp"/></div>
+        <div><img style={{width:"30px",height:"30px"}}src={pcf} alt="pcf"/></div>
 
         </div>
         {/* <div>Copyright &copy; James Bond 007</div> */}
