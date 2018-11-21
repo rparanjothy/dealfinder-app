@@ -33,6 +33,7 @@ class chuppiGrid extends Component {
 
   componentWillMount() {
     const { msg } = this.props.match.params;
+    document.title="Deal Finder Home"
     this.setState(
       {
         input: msg,

@@ -26,6 +26,7 @@ class chuppiGridProducts extends Component {
 
   componentWillMount() {
     const { msg } = this.props.match.params;
+    document.title=msg
     this.setState(
       {
         input: msg,

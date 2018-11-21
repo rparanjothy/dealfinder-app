@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/flask.302a4ce6.png"
   },
   {
-    "revision": "362d235a86369ea41411",
+    "revision": "2b85985e30ee1352178a",
     "url": "/static/css/main.8c6d8ffd.chunk.css"
   },
   {
@@ -24,8 +24,8 @@ self.__precacheManifest = [
     "url": "/static/media/python.ca2ceddc.png"
   },
   {
-    "revision": "362d235a86369ea41411",
-    "url": "/static/js/main.362d235a.chunk.js"
+    "revision": "2b85985e30ee1352178a",
+    "url": "/static/js/main.2b85985e.chunk.js"
   },
   {
     "revision": "f8dab57d048fabd69ea16c67e1615b86",
@@ -44,7 +44,7 @@ self.__precacheManifest = [
     "url": "/static/css/1.b5581ba8.chunk.css"
   },
   {
-    "revision": "eac6dc73c4f6b4da799d352b79838b29",
+    "revision": "0d54a9fe6cd1e9b3cb0cc616aa024bcc",
     "url": "/index.html"
   }
 ];
