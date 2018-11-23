@@ -6,7 +6,7 @@ Created on Thu Aug 23 16:05:59 2018
 """
 
 import pandas as pd
-from flask import Flask,render_template,request,jsonify
+from flask import Flask,render_template,request,jsonify,Response
 import os
 # from flask_bootstrap import Bootstrap
 from flask_cors import CORS
@@ -143,6 +143,18 @@ def getProdLabelitemid():
 # def search():
 #     return render_template('search.html')
 
+@app.route('/lessthan/<x>')
+# def showlt50():
+#     return jsonify({"message":len(lt50), "data":to_json(lt50)})
+def showlt50(x):
+    if '-' in pct:
+        mn,mx=[int(x) for x in pct.split('-')]
+        lt50out=lt50.loc[lt50['price'].between(mn,mx,inclusive=True)]
+    else:
+        lt50out=lt50.loc[lt50['price']<=int(x)]
+    return jsonify({"data":to_json(lt50out)})
+
+
 @app.route('/showSavings/<pct>/<minPrice>')
 @app.route('/showSavings/<pct>')
 def returnResult(pct,minPrice='9999999'):
@@ -201,6 +213,14 @@ df=pd.read_table(savings,sep='|',names=['itemid','price','was'])
 #    prdnmdf=pd.read_table(prodname,sep='|',names=['itemid','guid','productname','usage','1','2','3'])
 prdnmdf=pd.read_table(prodname,sep='|',names=['itemid','productname'])
 prdbrnddf=pd.read_table(prodbrnd,sep='|',names=['itemid','brand'])
+
+lt50=df.loc[df['price'].between(1,250,inclusive=True),:]
+# lt50=lt50.join(prdnmdf.set_index('itemid'),on='itemid',rsuffix='_n')
+# lt50=lt50.join(prdbrnddf.set_index('itemid'),on='itemid',rsuffix='_b')
+# fillval={'productname':'Product_Name_Missing','brand':'Brand_Missing'}
+# lt50=lt50.fillna(value=fillval)
+lt50=lt50.sort_values(by=['price'],kind='quicksort')
+
 
 # filer for values with was price
 #df=df.loc[df['was'].isna()!=True,:]
