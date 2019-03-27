@@ -8,8 +8,6 @@ cd /var/dealfinder
 mkdir APIServer
 mkdir APIServer/data
 cd ./APIServer
-sudo gsutil -m cp -r gs://hd-www-dev-catalog-data/dealfinder/APIServer/* .
-sudo gsutil -m cp gs://hd-www-prod-catalog-data/extracts/onlineprice-output/OnlineWas2PriceInventoryExtract.dat	 ./data/OnlineWas2PriceInventoryExtract.del
 
 sudo pip install virtualenv
 sudo virtualenv -p python venv
